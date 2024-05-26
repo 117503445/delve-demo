@@ -1,0 +1,13 @@
+services:
+  delve-demo-dev:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    volumes:
+        - ./:/workspace
+        - delve-demo-dev-vsc:/root/.vscode-server
+    stdin_open: true
+    tty: true
+
+volumes:
+  delve-demo-dev-vsc:
