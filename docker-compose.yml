@@ -8,6 +8,7 @@ services:
         - delve-demo-dev-vsc:/root/.vscode-server
     stdin_open: true
     tty: true
+    network_mode: host
 
 volumes:
   delve-demo-dev-vsc:
