@@ -6,7 +6,7 @@ WORKDIR /workspace
 
 COPY . .
 
-RUN go build -o /workspace/app
+RUN go build -o /workspace/app -gcflags="all=-N -l" 
 
 FROM golang:1.22.3
 
