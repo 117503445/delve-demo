@@ -1,0 +1,21 @@
+FROM golang:1.22.3 as builder
+
+RUN go env -w GOPROXY=https://goproxy.cn,direct
+
+WORKDIR /workspace2
+
+COPY . .
+
+RUN go build -o /workspace2/app -gcflags="all=-N -l" 
+
+FROM golang:1.22.3
+
+RUN go env -w GOPROXY=https://goproxy.cn,direct
+
+WORKDIR /workspace2
+
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+
+COPY --from=builder /workspace2/app /workspace2/app
+
+ENTRYPOINT [ "dlv", "--listen=:5432", "--headless=true", "--api-version=2", "exec", "/workspace2/app" ]
